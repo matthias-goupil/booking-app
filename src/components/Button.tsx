@@ -1,16 +1,19 @@
+import Link from "next/link";
 import React, { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-function Button({
-  children,
-  className,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      className={twMerge("bg-slate-800 text-white px-3 py-2 rounded", className)}
-      {...props}
-    >
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: string;
+}
+
+function Button({ href, children, className, ...props }: IButtonProps) {
+  const defaultStyle = "bg-slate-800 text-white px-3 py-2 rounded";
+  return href ? (
+    <Link className={twMerge(defaultStyle, "block")} href={href}>
+      {children}
+    </Link>
+  ) : (
+    <button className={twMerge(defaultStyle, className)} {...props}>
       {children}
     </button>
   );
